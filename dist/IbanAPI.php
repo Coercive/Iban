@@ -68,12 +68,18 @@ class IbanAPI
 		# Prepare Soap instance with mapping
 		return $this->client = new SoapClient($this->wsdl, [
 			'classmap' => [
+				'ABAValResStruct' => ABAValResStruct::class,
+				'BalanceResStruct' => BalanceResStruct::class,
+				'BankResStruct' => BankResStruct::class,
+				'BICStruct' => BICStruct::class,
+				'CountryResStruct' => CountryResStruct::class,
+				'CreditorIDValResStruct' => CreditorIDValResStruct::class,
+				'IBANCalcResStruct' => IBANCalcResStruct::class,
 				'IBANCandStruct' => IBANCandStruct::class,
 				'IBANValResStruct' => IBANValResStruct::class,
-				'IBANCalcResStruct' => IBANCalcResStruct::class,
-				'BalanceResStruct' => BalanceResStruct::class,
-				'CreditorIDValResStruct' => CreditorIDValResStruct::class,
-				'BICStruct' => BICStruct::class
+				'Form' => Form::class,
+				'GetSaltsResStruct' => GetSaltsResStruct::class,
+				'SubmitIBANResStruct' => SubmitIBANResStruct::class,
 			]
 		]);
 	}
