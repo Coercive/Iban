@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Coercive\Shop\Iban\Struct;
 
 /**
@@ -14,9 +16,10 @@ namespace Coercive\Shop\Iban\Struct;
  * @link https://github.com/Coercive/Iban
  *
  * @author  	Anthony Moral <contact@coercive.fr>
- * @copyright   (c) 2018 Anthony Moral
+ * @copyright   2018 - 2026 Anthony Moral
  * @license 	MIT
  */
+#[\AllowDynamicProperties]
 class IBANCalcResStruct
 {
 	/** @var string */
@@ -36,6 +39,9 @@ class IBANCalcResStruct
 
 	/** @var BICStruct[] */
 	public $bic_candidates = [];
+
+	/** @var string */
+	public $country = '';
 
 	/** @var string */
 	public $bank_code = '';

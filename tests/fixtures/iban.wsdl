@@ -1,0 +1,828 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="https://ssl.ibanrechner.de/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="https://ssl.ibanrechner.de/">
+<types>
+<xsd:schema targetNamespace="https://ssl.ibanrechner.de/"
+>
+ <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="http://schemas.xmlsoap.org/soap/encoding/" />
+ <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"  />
+ <xsd:complexType name="ArrayOfString">
+  <xsd:complexContent>
+   <xsd:restriction base="SOAP-ENC:Array">
+    <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="xsd:string[]"/>
+   </xsd:restriction>
+  </xsd:complexContent>
+ </xsd:complexType>
+ <xsd:complexType name="BICStruct">
+  <xsd:all>
+   <xsd:element name="bic" type="xsd:string"/>
+   <xsd:element name="zip" type="xsd:string"/>
+   <xsd:element name="city" type="xsd:string"/>
+   <xsd:element name="wwwcount" type="xsd:int"/>
+   <xsd:element name="sampleurl" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="item">
+  <xsd:all>
+   <xsd:element name="key" type="xsd:string"/>
+   <xsd:element name="value" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="Map">
+  <xsd:complexContent>
+   <xsd:restriction base="SOAP-ENC:Array">
+    <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:item[]"/>
+   </xsd:restriction>
+  </xsd:complexContent>
+ </xsd:complexType>
+ <xsd:complexType name="ArrayOfBICStruct">
+  <xsd:complexContent>
+   <xsd:restriction base="SOAP-ENC:Array">
+    <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:BICStruct[]"/>
+   </xsd:restriction>
+  </xsd:complexContent>
+ </xsd:complexType>
+ <xsd:complexType name="BankStruct">
+  <xsd:all>
+   <xsd:element name="name" type="xsd:string"/>
+   <xsd:element name="bic" type="xsd:string"/>
+   <xsd:element name="bankcode" type="xsd:int"/>
+   <xsd:element name="branchcode" type="xsd:int"/>
+   <xsd:element name="country" type="xsd:string"/>
+   <xsd:element name="address" type="xsd:string"/>
+   <xsd:element name="in_scl_directory" type="xsd:string"/>
+   <xsd:element name="sct" type="xsd:string"/>
+   <xsd:element name="sdd" type="xsd:string"/>
+   <xsd:element name="cor1" type="xsd:string"/>
+   <xsd:element name="b2b" type="xsd:string"/>
+   <xsd:element name="scc" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="ArrayOfBankStruct">
+  <xsd:complexContent>
+   <xsd:restriction base="SOAP-ENC:Array">
+    <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:BankStruct[]"/>
+   </xsd:restriction>
+  </xsd:complexContent>
+ </xsd:complexType>
+ <xsd:complexType name="BankResStruct">
+  <xsd:all>
+   <xsd:element name="result" type="xsd:string"/>
+   <xsd:element name="banks" type="tns:ArrayOfBankStruct"/>
+   <xsd:element name="balance" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="SubmitIBANResStruct">
+  <xsd:all>
+   <xsd:element name="result" type="xsd:string"/>
+   <xsd:element name="earned_points" type="xsd:int"/>
+   <xsd:element name="balance" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CountryResStruct">
+  <xsd:all>
+   <xsd:element name="result" type="xsd:string"/>
+   <xsd:element name="supported_countries" type="tns:ArrayOfString"/>
+   <xsd:element name="country_names" type="tns:ArrayOfString"/>
+   <xsd:element name="balance" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="GetSaltsResStruct">
+  <xsd:all>
+   <xsd:element name="result" type="xsd:string"/>
+   <xsd:element name="salts" type="tns:ArrayOfString"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="Field">
+  <xsd:all>
+   <xsd:element name="id" type="xsd:string"/>
+   <xsd:element name="type" type="xsd:string"/>
+   <xsd:element name="value" type="xsd:string"/>
+   <xsd:element name="label" type="xsd:string"/>
+   <xsd:element name="optionids" type="tns:ArrayOfString"/>
+   <xsd:element name="options" type="tns:ArrayOfString"/>
+   <xsd:element name="length" type="xsd:int"/>
+   <xsd:element name="newline" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="ArrayOfField">
+  <xsd:complexContent>
+   <xsd:restriction base="SOAP-ENC:Array">
+    <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Field[]"/>
+   </xsd:restriction>
+  </xsd:complexContent>
+ </xsd:complexType>
+ <xsd:complexType name="Form">
+  <xsd:all>
+   <xsd:element name="done" type="xsd:string"/>
+   <xsd:element name="fields" type="tns:ArrayOfField"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="IBANValResStruct">
+  <xsd:all>
+   <xsd:element name="iban" type="xsd:string"/>
+   <xsd:element name="result" type="xsd:string"/>
+   <xsd:element name="return_code" type="xsd:string"/>
+   <xsd:element name="checks" type="tns:ArrayOfString"/>
+   <xsd:element name="bic_candidates" type="tns:ArrayOfBICStruct"/>
+   <xsd:element name="all_bic_candidates" type="tns:ArrayOfBICStruct"/>
+   <xsd:element name="country" type="xsd:string"/>
+   <xsd:element name="bank_code" type="xsd:string"/>
+   <xsd:element name="bank" type="xsd:string"/>
+   <xsd:element name="bank_address" type="xsd:string"/>
+   <xsd:element name="bank_url" type="xsd:string"/>
+   <xsd:element name="branch" type="xsd:string"/>
+   <xsd:element name="branch_code" type="xsd:string"/>
+   <xsd:element name="in_scl_directory" type="xsd:string"/>
+   <xsd:element name="sct" type="xsd:string"/>
+   <xsd:element name="sdd" type="xsd:string"/>
+   <xsd:element name="cor1" type="xsd:string"/>
+   <xsd:element name="b2b" type="xsd:string"/>
+   <xsd:element name="scc" type="xsd:string"/>
+   <xsd:element name="account_number" type="xsd:string"/>
+   <xsd:element name="account_validation_method" type="xsd:string"/>
+   <xsd:element name="account_validation" type="xsd:string"/>
+   <xsd:element name="length_check" type="xsd:string"/>
+   <xsd:element name="account_check" type="xsd:string"/>
+   <xsd:element name="bank_code_check" type="xsd:string"/>
+   <xsd:element name="iban_checksum_check" type="xsd:string"/>
+   <xsd:element name="data_age" type="xsd:string"/>
+   <xsd:element name="iban_www_occurrences" type="xsd:int"/>
+   <xsd:element name="www_seen_from" type="xsd:string"/>
+   <xsd:element name="www_seen_until" type="xsd:string"/>
+   <xsd:element name="iban_url" type="xsd:string"/>
+   <xsd:element name="url_rank" type="xsd:string"/>
+   <xsd:element name="url_category" type="xsd:string"/>
+   <xsd:element name="url_min_depth" type="xsd:string"/>
+   <xsd:element name="www_prominence" type="xsd:string"/>
+   <xsd:element name="iban_reported_to_exist" type="xsd:int"/>
+   <xsd:element name="iban_last_reported" type="xsd:string"/>
+   <xsd:element name="IBANformat" type="xsd:string"/>
+   <xsd:element name="formatcomment" type="xsd:string"/>
+   <xsd:element name="balance" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="IBANCandStruct">
+  <xsd:all>
+   <xsd:element name="iban_candidates" type="tns:ArrayOfString"/>
+   <xsd:element name="result" type="xsd:string"/>
+   <xsd:element name="IBANformat" type="xsd:string"/>
+   <xsd:element name="formatcomment" type="xsd:string"/>
+   <xsd:element name="balance" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditorIDValResStruct">
+  <xsd:all>
+   <xsd:element name="id" type="xsd:string"/>
+   <xsd:element name="result" type="xsd:string"/>
+   <xsd:element name="return_code" type="xsd:string"/>
+   <xsd:element name="checks" type="tns:ArrayOfString"/>
+   <xsd:element name="country" type="xsd:string"/>
+   <xsd:element name="creditor_business_code" type="xsd:string"/>
+   <xsd:element name="national_id" type="xsd:string"/>
+   <xsd:element name="length_check" type="xsd:string"/>
+   <xsd:element name="country_check" type="xsd:string"/>
+   <xsd:element name="checksum_check" type="xsd:string"/>
+   <xsd:element name="balance" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="ABAValResStruct">
+  <xsd:all>
+   <xsd:element name="routing_number" type="xsd:string"/>
+   <xsd:element name="result" type="xsd:string"/>
+   <xsd:element name="return_code" type="xsd:string"/>
+   <xsd:element name="OKchecksum" type="xsd:string"/>
+   <xsd:element name="OKformat" type="xsd:string"/>
+   <xsd:element name="name" type="xsd:string"/>
+   <xsd:element name="state" type="xsd:string"/>
+   <xsd:element name="city" type="xsd:string"/>
+   <xsd:element name="funds_transfer" type="xsd:string"/>
+   <xsd:element name="book_entry_securities_transfer" type="xsd:string"/>
+   <xsd:element name="settlement_only" type="xsd:string"/>
+   <xsd:element name="range" type="xsd:string"/>
+   <xsd:element name="balance" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="IBANCalcResStruct">
+  <xsd:all>
+   <xsd:element name="iban" type="xsd:string"/>
+   <xsd:element name="result" type="xsd:string"/>
+   <xsd:element name="return_code" type="xsd:string"/>
+   <xsd:element name="ibanrueck_return_code" type="xsd:string"/>
+   <xsd:element name="checks" type="tns:ArrayOfString"/>
+   <xsd:element name="bic_candidates" type="tns:ArrayOfBICStruct"/>
+   <xsd:element name="country" type="xsd:string"/>
+   <xsd:element name="bank_code" type="xsd:string"/>
+   <xsd:element name="alternative_bank_code" type="xsd:string"/>
+   <xsd:element name="bank" type="xsd:string"/>
+   <xsd:element name="bank_address" type="xsd:string"/>
+   <xsd:element name="bank_url" type="xsd:string"/>
+   <xsd:element name="branch" type="xsd:string"/>
+   <xsd:element name="branch_code" type="xsd:string"/>
+   <xsd:element name="in_scl_directory" type="xsd:string"/>
+   <xsd:element name="sct" type="xsd:string"/>
+   <xsd:element name="sdd" type="xsd:string"/>
+   <xsd:element name="cor1" type="xsd:string"/>
+   <xsd:element name="b2b" type="xsd:string"/>
+   <xsd:element name="scc" type="xsd:string"/>
+   <xsd:element name="account_number" type="xsd:string"/>
+   <xsd:element name="alternative_account_number" type="xsd:string"/>
+   <xsd:element name="account_validation_method" type="xsd:string"/>
+   <xsd:element name="account_validation" type="xsd:string"/>
+   <xsd:element name="length_check" type="xsd:string"/>
+   <xsd:element name="account_check" type="xsd:string"/>
+   <xsd:element name="bank_code_check" type="xsd:string"/>
+   <xsd:element name="bic_plausibility_check" type="xsd:string"/>
+   <xsd:element name="data_age" type="xsd:string"/>
+   <xsd:element name="IBANformat" type="xsd:string"/>
+   <xsd:element name="formatcomment" type="xsd:string"/>
+   <xsd:element name="balance" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="ArrayOfIBANCalcResStruct">
+  <xsd:complexContent>
+   <xsd:restriction base="SOAP-ENC:Array">
+    <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:IBANCalcResStruct[]"/>
+   </xsd:restriction>
+  </xsd:complexContent>
+ </xsd:complexType>
+ <xsd:complexType name="ArrayOfIBANValResStruct">
+  <xsd:complexContent>
+   <xsd:restriction base="SOAP-ENC:Array">
+    <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:IBANValResStruct[]"/>
+   </xsd:restriction>
+  </xsd:complexContent>
+ </xsd:complexType>
+ <xsd:complexType name="TransferResStruct">
+  <xsd:all>
+   <xsd:element name="url" type="xsd:string"/>
+   <xsd:element name="result" type="xsd:string"/>
+   <xsd:element name="validation_to" type="tns:IBANValResStruct"/>
+   <xsd:element name="validation_from" type="tns:IBANValResStruct"/>
+   <xsd:element name="balance" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="BalanceResStruct">
+  <xsd:all>
+   <xsd:element name="message" type="xsd:string"/>
+   <xsd:element name="balance" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+</xsd:schema>
+</types>
+<message name="get_balanceRequest">
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" /></message>
+<message name="get_balanceResponse">
+  <part name="return" type="tns:BalanceResStruct" /></message>
+<message name="validate_ibanRequest">
+  <part name="iban" type="xsd:string" />
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" />
+  <part name="account_holder" type="xsd:string" /></message>
+<message name="validate_ibanResponse">
+  <part name="return" type="tns:IBANValResStruct" /></message>
+<message name="restore_ibanRequest">
+  <part name="iban" type="xsd:string" />
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" /></message>
+<message name="restore_ibanResponse">
+  <part name="return" type="tns:IBANCandStruct" /></message>
+<message name="validate_iban_bicRequest">
+  <part name="iban" type="xsd:string" />
+  <part name="bic" type="xsd:string" />
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" />
+  <part name="account_holder" type="xsd:string" /></message>
+<message name="validate_iban_bicResponse">
+  <part name="return" type="tns:IBANValResStruct" /></message>
+<message name="transfer_formRequest">
+  <part name="kind" type="xsd:string" />
+  <part name="date" type="xsd:string" />
+  <part name="toname" type="xsd:string" />
+  <part name="toaccount" type="xsd:string" />
+  <part name="tobankcode" type="xsd:string" />
+  <part name="fromname" type="xsd:string" />
+  <part name="fromaccount" type="xsd:string" />
+  <part name="frombankcode" type="xsd:string" />
+  <part name="amount" type="xsd:string" />
+  <part name="memo1" type="xsd:string" />
+  <part name="memo2" type="xsd:string" />
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" /></message>
+<message name="transfer_formResponse">
+  <part name="return" type="tns:TransferResStruct" /></message>
+<message name="validate_creditor_identifierRequest">
+  <part name="creditor_identifier" type="xsd:string" />
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" /></message>
+<message name="validate_creditor_identifierResponse">
+  <part name="return" type="tns:CreditorIDValResStruct" /></message>
+<message name="calculate_ibanRequest">
+  <part name="country" type="xsd:string" />
+  <part name="bankcode" type="xsd:string" />
+  <part name="account" type="xsd:string" />
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" />
+  <part name="bic" type="xsd:string" />
+  <part name="legacy_mode" type="xsd:int" /></message>
+<message name="calculate_ibanResponse">
+  <part name="return" type="tns:IBANCalcResStruct" /></message>
+<message name="validate_iban_batchRequest">
+  <part name="countries" type="xsd:string" />
+  <part name="bankcodes" type="xsd:string" />
+  <part name="accounts" type="xsd:string" />
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" />
+  <part name="bics" type="xsd:string" />
+  <part name="legacy_mode" type="xsd:int" /></message>
+<message name="validate_iban_batchResponse">
+  <part name="return" type="tns:ArrayOfIBANValResStruct" /></message>
+<message name="calculate_iban_batchRequest">
+  <part name="countries" type="xsd:string" />
+  <part name="bankcodes" type="xsd:string" />
+  <part name="accounts" type="xsd:string" />
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" />
+  <part name="bics" type="xsd:string" />
+  <part name="legacy_mode" type="xsd:int" /></message>
+<message name="calculate_iban_batchResponse">
+  <part name="return" type="tns:ArrayOfIBANCalcResStruct" /></message>
+<message name="validate_ABARequest">
+  <part name="routing_number" type="xsd:string" />
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" /></message>
+<message name="validate_ABAResponse">
+  <part name="return" type="tns:ABAValResStruct" /></message>
+<message name="get_dutch_banksRequest">
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" /></message>
+<message name="get_dutch_banksResponse">
+  <part name="return" type="tns:BankResStruct" /></message>
+<message name="get_swiss_banksRequest">
+  <part name="bank" type="xsd:string" />
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" /></message>
+<message name="get_swiss_banksResponse">
+  <part name="return" type="tns:BankResStruct" /></message>
+<message name="find_bankRequest">
+  <part name="searchterms" type="xsd:string" />
+  <part name="country" type="xsd:string" />
+  <part name="bankcode" type="xsd:string" />
+  <part name="maxitems" type="xsd:int" />
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" /></message>
+<message name="find_bankResponse">
+  <part name="return" type="tns:BankResStruct" /></message>
+<message name="get_saltsRequest">
+  <part name="account_holder" type="xsd:string" />
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" /></message>
+<message name="get_saltsResponse">
+  <part name="return" type="tns:GetSaltsResStruct" /></message>
+<message name="submit_ibanRequest">
+  <part name="iban" type="xsd:string" />
+  <part name="account_holder" type="xsd:string" />
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" /></message>
+<message name="submit_ibanResponse">
+  <part name="return" type="tns:SubmitIBANResStruct" /></message>
+<message name="submit_hashesRequest">
+  <part name="hashes" type="xsd:string" />
+  <part name="salts" type="xsd:string" />
+  <part name="IBANprefix" type="xsd:string" />
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" /></message>
+<message name="submit_hashesResponse">
+  <part name="return" type="tns:SubmitIBANResStruct" /></message>
+<message name="supported_countriesRequest">
+  <part name="supported_condition" type="xsd:string" />
+  <part name="language" type="xsd:string" />
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" /></message>
+<message name="supported_countriesResponse">
+  <part name="return" type="tns:CountryResStruct" /></message>
+<message name="country_supportedRequest">
+  <part name="country" type="xsd:string" />
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" /></message>
+<message name="country_supportedResponse">
+  <part name="return" type="tns:CountryResStruct" /></message>
+<message name="get_formRequest">
+  <part name="params" type="tns:Map" />
+  <part name="user" type="xsd:string" />
+  <part name="password" type="xsd:string" /></message>
+<message name="get_formResponse">
+  <part name="return" type="tns:Form" /></message>
+<portType name="IBAN_CalculatorPortType">
+  <operation name="get_balance">
+    <documentation>Returns the account balance (number of paid calculations) for the specified user account.</documentation>
+    <input message="tns:get_balanceRequest"/>
+    <output message="tns:get_balanceResponse"/>
+  </operation>
+  <operation name="validate_iban">
+    <documentation>Validates the given IBAN and returns BIC information (either the BIC which is associated with the account, or multiple BIC candidates, with the most likely suitable BIC listed first) and other information such as bank name, address, and presence of an IBAN on the Web. The user ID and password you need to pass with the request are the same you use for logging in on the website iban-bic.com. Instead of the password, you may also pass md5('validate_iban'.user.iban.password), that is, the MD5 hash of the concatenation of the function name, your user name, the IBAN, and your password. The account_holder parameter is optional; if you pass a non-empty value, the function will check if any other user of our service has reported that the given IBAN exists and belongs to the given account holder. We do not have complete coverage of all existing IBANs, so one cannot conclude much if we know nothing about an IBAN's existence, but if we do know that it exists, you can be pretty sure the IBAN is not only formally correct but also belongs to the given account holder.&lt;br&gt;
+Output fields are:&lt;br&gt;
+iban: the IBAN that was validated.&lt;br&gt;
+result: 'passed' or 'failed' - for a valid or invalid IBAN&lt;br&gt;
+return_code: a condensed representation of the results of various checks. Not all checks have necessarily been done (see the other fields to find out). The condensed representation is a number which is 0 if all supported checks were done and passed. Otherwise, it is the sum of one or more of the following numbers: 1=automatically appended a subaccount number; 2=account number does not contain a checksum; 4=did not check the checksum; 8=did not check the bank code; 32=warning: a subaccount number might need to be appended, but you need to check if this is really the case; 128=checksum error in account number; 256=bank code not found in directory; 512=wrong length for IBAN; 1024=wrong length for bank code; 2048=IBAN checksum error (digits 3 and 4); 4096=missing input data (such as country code); 8192=this country is not (yet?) supported.&lt;br&gt; This condensed return code can be used for a simple check such as: if the sum is less than 32, the result can be assumed to be correct; if it is in the range from 32 to 127, it might be correct but should be checked; if it is 128 or higher, there seems to be a more serious error. There is one exception to this rule: if it is 65536, this means that the return code is not set at all. This should not happen - please notify us if it does.&lt;br&gt;
+checks: an array of the checks performed (can contain elements such as 'length', 'bank_code', 'account_number', 'iban_checksum').&lt;br&gt;
+bic_candidates: an array of BICs that are associated with the given national bank code. May be empty or may contain one or more elements. The BICstruct element has the attributes bic, wwwcount, sampleurl, zip code, and city. If a wwwcount greater than zero is given, the BIC was harvested from the Web (and found on as many pages as indicated by wwwcount, for example at the URL given by sampleurl). If wwwcount is zero, the BIC comes from a national bank or the ECB. If city is given, this also indicates that the BIC comes from a national bank or the ECB. The given city does not necessarily reflect the location of the given branch - it can also be the location of the headquarters.&lt;br&gt;
+country: the ISO country code (first two letters of the IBAN)&lt;br&gt;
+bank_code: the national bank code. Part of the BIC for NL (where no national bank code exists).&lt;br&gt;
+bank: bank name, if known&lt;br&gt;
+bank_address: some address data, if known&lt;br&gt;
+bank_url: URL of website, if known&lt;br&gt;
+branch: branch name, if known&lt;br&gt;
+branch_code: branch code, if known&lt;br&gt;
+in_scl_directory: if at least one BIC is returned, this field is set to 'yes' or 'no', depending on whether the first returned BIC is listed in the German Bundesbank's SCL directory. If no BIC is returned, this field is left blank.&lt;br&gt;
+sct: if in_scl_directory is set to 'yes', this field is set to 'yes' if a SEPA Credit Transfer is supported for the first returned BIC. If no SCT is supported, the field is set to 'no'. If no BIC is returned, the field is left blank.&lt;br&gt;
+sdd: if in_scl_directory is set to 'yes', this field is set to 'yes' if SEPA Direct Debit is supported for the first returned BIC. If no SDD is supported, the field is set to 'no'. If no BIC is returned, the field is left blank.&lt;br&gt;
+cor1: if in_scl_directory is set to 'yes', this field is set to 'yes' if D-1 Core SEPA Direct Debit  is supported for the first returned BIC. 
+b2b: if in_scl_directory is set to 'yes', this field is set to 'yes' if SEPA Business to Business is supported for the first returned BIC. If no B2B is supported, the field is set to 'no'. If no BIC is returned, the field is left blank.&lt;br&gt;
+scc:  if in_scl_directory is set to 'yes', this field is set to 'yes' if SEPA Cards Clearing is supported for the first returned BIC.
+account_number: the domestic bank account number&lt;br&gt;
+account_validation_method: name of the validation algorithm for the domestic account number&lt;br&gt;
+account_validation: for German or Swiss account numbers, an explanation (in German)&lt;br&gt;
+length_check: 'passed' or 'failed' - for the right number of characters for the given country&lt;br&gt;
+account_check (not provided for every country): 'passed' or 'failed' (checksum validation; if the algorithm is unknown, or if there is no checksum, the result is 'passed' or empty).&lt;br&gt;
+bank_code_check (not provided for every country): lookup of national bank code was successful ('passed') or not ('failed')&lt;br&gt;
+iban_checksum_check: 'passed' or 'failed' (correctness of the two digits right after the country code in the IBAN)&lt;br&gt;
+data_age (not given for all countries): age of the BIC and other bank-related data (not defined for data harvested from the Web). Format: yyyymmdd.&lt;br&gt;
+iban_www_occurrences: the number of web pages where we have found the given IBAN. If this number is greater than zero, you can use the additional information from the fields www_seen_from until www_prominence for fraud prevention purposes (such as: judging if an IBAN really belongs to your client or if it was harvested from the Web and is used by people other than the real account holders).&lt;br&gt;
+www_seen_from: the earliest date when we have found the IBAN. This is probably not the date when it appeared online because there is a delay until we notice a new IBAN on the Web.&lt;br&gt;
+www_seen_until: the latest date when we have found the IBAN on a web page. It might have disappeared before then because there is, for technical reasons, a certain delay between crawling and evaluating pages.&lt;br&gt;
+iban_url: the most prominent online occurrence of the IBAN (with prominence measured primarily by the rank given in the next field).&lt;br&gt;
+url_rank: the number of websites which receive more traffic than this one. So, the lower this number, the more prominent the website.&lt;br&gt;
+url_category: the thematic category (in natural language) of the most prominent URL, if known.
+url_min_depth: the lowest depth where we found the URL, approximated by the number of forward slashes in the URL.&lt;br&gt;
+www_prominence: this field is reserved for future use for a number which will represent the prominence of the URL, based on a combination of things such as rank, duration of online presence, and depth on the website.&lt;br&gt;
+iban_reported_to_exist: if you have submitted the name of the account holder, and if at least one other user has reported the given IBAN to belong to the given account holder, this field will contain a number greater than zero (namely, the number of times this IBAN was reported to belong to the given account holder). If you have not submitted the account holder or if nobody has reported this IBAN to belong to the account holder you submitted, this field is set to zero.&lt;br&gt;
+iban_last_reported: if the given IBAN was reported to belong to the given account holder, this field will contain the date in the format yyyymmdd when the IBAN was last reported to exist. If you did not submit the account holder or if nobody has confirmed the IBAN exists, this field is left empty.&lt;br&gt;	   
+IBANformat: a string describing the IBAN format for the given country, for example: 'DEkk BBBB BBBB CCCC CCCC CC'.&lt;br&gt;
+formatcomment: an explanation of the IBANformat string, for example: 'B = sort code (BLZ), C = account No.'&lt;br&gt;
+balance: the number of remaining calculations you can do before having to recharge your account. This does not apply to customers with a subscription which includes an unlimited number of calculations.</documentation>
+    <input message="tns:validate_ibanRequest"/>
+    <output message="tns:validate_ibanResponse"/>
+  </operation>
+  <operation name="restore_iban">
+    <documentation>Returns a list of possible IBANs for a given pattern. The pattern is an IBAN where one or two digits are replaced with a question
+	  mark (?), which serves as a wild card. The purpose of this function is to restore an IBAN where one or two digits are illegible.&lt;br&gt;
+Output fields are:&lt;br&gt;
+  iban_candidates: zero, one, or more IBANs which fit the given pattern and which are formally correct. If only one IBAN is returned, this is the only formally correct IBAN which fits the given pattern.&lt;br&gt;
+  result: ar error or success message in natural language.&lt;br&gt; 
+IBANformat: a string describing the IBAN format for the given country, for example: 'DEkk BBBB BBBB CCCC CCCC CC'.&lt;br&gt;
+formatcomment: an explanation of the IBANformat string, for example: 'B = sort code (BLZ), C = account No.'&lt;br&gt;
+balance: the number of remaining calculations you can do before having to recharge your account. This does not apply to customers with a subscription which includes an unlimited number of calculations.</documentation>
+    <input message="tns:restore_ibanRequest"/>
+    <output message="tns:restore_ibanResponse"/>
+  </operation>
+  <operation name="validate_iban_bic">
+    <documentation>Validates the given IBAN and checks whether the given BIC is listed in the SCL reachability directory, and whether its country code matches the country code in the IBAN. This function does not check whether the given BIC is actually associated with the given BIC - for this check, please use the function validate_iban and check whether the given BIC is listed among the BIC candidates returned by validate_iban.
+	  The user ID and password you need to pass with the request are the same you use for logging in on the website iban-bic.com. The account_holder parameter is optional; if you pass a non-empty value, the function will check if any other user of our service has reported that the given IBAN exists and belongs to the given account holder. We do not have complete coverage of all existing IBANs, so one cannot conclude much if we know nothing about an IBAN's existence, but if we do know that it exists, you can be pretty sure the IBAN is not only formally correct but also belongs to the given account holder.&lt;br&gt;
+Output fields are:&lt;br&gt;
+iban: the IBAN that was validated.&lt;br&gt;
+result: 'passed' or 'failed' - for a valid or invalid IBAN&lt;br&gt;
+return_code: a condensed representation of the results of various checks. Not all checks have necessarily been done (see the other fields to find out). The condensed representation is a number which is 0 if all supported checks were done and passed. Otherwise, it is the sum of one or more of the following numbers: 1=automatically appended a subaccount number; 2=account number does not contain a checksum; 4=did not check the checksum; 8=did not check the bank code; 32=warning: a subaccount number might need to be appended, but you need to check if this is really the case; 128=checksum error in account number; 256=bank code not found in directory; 512=wrong length for IBAN; 1024=wrong length for bank code; 2048=IBAN checksum error (digits 3 and 4); 4096=missing input data (such as country code); 8192=this country is not (yet?) supported.&lt;br&gt; This condensed return code can be used for a simple check such as: if the sum is less than 32, the result can be assumed to be correct; if it is in the range from 32 to 127, it might be correct but should be checked; if it is 128 or higher, there seems to be a more serious error. There is one exception to this rule: if it is 65536, this means that the return code is not set at all. This should not happen - please notify us if it does.&lt;br&gt;
+checks: an array of the checks performed (can contain elements such as 'length', 'bank_code', 'account_number', 'iban_checksum').&lt;br&gt;
+bic_candidates: an array of BICs that are associated with the given national bank code. May be empty or may contain one or more elements. The BICstruct element has the attributes bic, wwwcount, sampleurl, zip code, and city. If a wwwcount greater than zero is given, the BIC was harvested from the Web (and found on as many pages as indicated by wwwcount, for example at the URL given by sampleurl). If wwwcount is zero, the BIC comes from a national bank or the ECB. If city is given, this also indicates that the BIC comes from a national bank or the ECB. The given city does not necessarily reflect the location of the given branch - it can also be the location of the headquarters.&lt;br&gt;
+country: the ISO country code (first two letters of the IBAN)&lt;br&gt;
+bank_code: the national bank code. Part of the BIC for NL (where no national bank code exists).&lt;br&gt;
+bank: bank name, if known&lt;br&gt;
+bank_address: some address data, if known&lt;br&gt;
+bank_url: URL of website, if known&lt;br&gt;
+branch: branch name, if known&lt;br&gt;
+branch_code: branch code, if known&lt;br&gt;
+in_scl_directory: if at least one BIC is returned, this field is set to 'yes' or 'no', depending on whether the first returned BIC is listed in the German Bundesbank's SCL directory. If no BIC is returned, this field is left blank.&lt;br&gt;
+sct: if in_scl_directory is set to 'yes', this field is set to 'yes' if a SEPA Credit Transfer is supported for the first returned BIC. If no SCT is supported, the field is set to 'no'. If no BIC is returned, the field is left blank.&lt;br&gt;
+sdd: if in_scl_directory is set to 'yes', this field is set to 'yes' if SEPA Direct Debit is supported for the first returned BIC. If no SDD is supported, the field is set to 'no'. If no BIC is returned, the field is left blank.&lt;br&gt;
+cor1: if in_scl_directory is set to 'yes', this field is set to 'yes' if D-1 Core SEPA Direct Debit  is supported for the first returned BIC. 
+b2b: if in_scl_directory is set to 'yes', this field is set to 'yes' if SEPA Business to Business is supported for the first returned BIC. If no B2B is supported, the field is set to 'no'. If no BIC is returned, the field is left blank.&lt;br&gt;
+scc:  if in_scl_directory is set to 'yes', this field is set to 'yes' if SEPA Cards Clearing is supported for the first returned BIC.
+account_number: the domestic bank account number&lt;br&gt;
+account_validation_method: name of the validation algorithm for the domestic account number&lt;br&gt;
+account_validation: for German or Swiss account numbers, an explanation (in German)&lt;br&gt;
+length_check: 'passed' or 'failed' - for the right number of characters for the given country&lt;br&gt;
+account_check (not provided for every country): 'passed' or 'failed' (checksum validation; if the algorithm is unknown, or if there is no checksum, the result is 'passed' or empty).&lt;br&gt;
+bank_code_check (not provided for every country): lookup of national bank code was successful ('passed') or not ('failed')&lt;br&gt;
+iban_checksum_check: 'passed' or 'failed' (correctness of the two digits right after the country code in the IBAN)&lt;br&gt;
+data_age (not given for all countries): age of the BIC and other bank-related data (not defined for data harvested from the Web). Format: yyyymmdd.&lt;br&gt;
+IBANformat: a string describing the IBAN format for the given country, for example: 'DEkk BBBB BBBB CCCC CCCC CC'.&lt;br&gt;
+formatcomment: an explanation of the IBANformat string, for example: 'B = sort code (BLZ), C = account No.'&lt;br&gt;
+balance: the number of remaining calculations you can do before having to recharge your account. This does not apply to customers with a subscription which includes an unlimited number of calculations.</documentation>
+    <input message="tns:validate_iban_bicRequest"/>
+    <output message="tns:validate_iban_bicResponse"/>
+  </operation>
+  <operation name="transfer_form">
+    <documentation>Creates a PDF transfer form.
+	The user ID and password you need to pass with the request are the same you use for logging in on the website iban-bic.com.
+	Instead of the password, you may also pass md5('transfer_form'.user.kind.date.toaccount.tobankcode.fromaccount.frombankcode.amount.password), that is, the MD5 hash of the concatenation of the function name, your user name, the listed parameters, and your password.
+	&lt;br&gt;
+Output fields are:&lt;br&gt;
+url: the URL of the resulting PDF form. Please download this file within 24 hours. It will be deleted thereafter.&lt;br&gt;
+result: 'passed' if both bank accounts are successfully validated and no other error has occured. Otherwise, this field contains an error message.&lt;br&gt;
+validation_to: the results of various checks in the datastructure used by the function validate_iban, for the first specified account (destination).&lt;br&gt;
+validation_from: the results of various checks in the datastructure used by the function validate_iban, for the second specified account (source).&lt;br&gt;
+balance: the number of remaining calculations you can do before having to recharge your account. This does not apply to customers with a subscription which includes an unlimited number of calculations.</documentation>
+    <input message="tns:transfer_formRequest"/>
+    <output message="tns:transfer_formResponse"/>
+  </operation>
+  <operation name="validate_creditor_identifier">
+    <documentation>Validates the given Creditor Identifier. The user ID and password you need to pass with the request are the same you use for logging in on the website iban-bic.com.
+        Instead of the password, you may also pass md5('validate_credit_identifier'.user.creditor_identifier.password), that is, the MD5 hash of the concatenation of the function name, your user name, the creditor identifier, and your password.&lt;br&gt;
+Output fields are:&lt;br&gt;
+id: the creditor identifier which was validated.&lt;br&gt;
+result: 'passed' or 'failed' - for a valid or invalid Creditor Identifier.&lt;br&gt;
+return_code: a condensed representation of the results of various checks. Not all checks have necessarily been done (see the other fields to find out). The condensed representation is a number which is 0 if all supported checks were done and passed. Otherwise, it is the sum of one or more of the following numbers: 512=wrong length of the Creditor Identifier; 1024=invalid country code (no SEPA country); 2048=ID checksum error (digits3 and 4).&lt;br&gt; If the return code is 65536, this means that it is not set at all. This should not happen - please notify us if it does.&lt;br&gt;
+checks: an array of the checks performed (can contain elements such as 'length' and 'checksum').&lt;br&gt;
+country: the ISO country code (first 2 digits of the ID).&lt;br&gt;
+creditor_business_code: the 3 digits which are chosen by the creditor, for instance to keep track of different branches.&lt;br&gt;
+national_id: the domestic ID number which identifies the creditor.&lt;br&gt;
+length_check: 'passed' or 'failed' - for the right number of characters for the given country&lt;br&gt;
+checksum_check: 'passed' or 'failed' (correctness of the two digits right after the country code in the Creditor Identifier)&lt;br&gt;
+balance: the number of remaining calculations you can do before having to recharge your account. This does not apply to customers with a subscription which includes an unlimited number of calculations.</documentation>
+    <input message="tns:validate_creditor_identifierRequest"/>
+    <output message="tns:validate_creditor_identifierResponse"/>
+  </operation>
+  <operation name="calculate_iban">
+    <documentation>Calculates an IBAN for the given domestic account number. The user ID and password you need to pass with the request are the same you use for logging in on the website iban-bic.com. Instead of the password, you may also pass md5('calculate_iban'.user.account.password), that is, the MD5 hash of the concatenation of the function name, your user name, the account number, and your password.&lt;br&gt;
+Parameters are:&lt;br&gt;
+country - the 2-letter ISO country code.&lt;br&gt;
+bankcode -  The national bank code (BC number for Switzerland). For the following countries, the whole domestic account number, including any bank codes and branch codes, should be passed with the account parameter, and the bankcode parameter should stay empty: IT, BE, ES, EE, SK, CZ, HU, LU, PL, FR, GR&lt;br&gt;
+account - the domestic account number&lt;br&gt;
+user - your unique user ID&lt;br&gt;
+password - your password&lt;br&gt;
+bic - the BIC (or at least a sufficiently long prefix) for GB, NL (GB: web crawl can be used, but does not provide all BICs. If the bic parameter is omitted, and the BIC is not found in the Web crawl, this will be shown with an error message in the output field result). This parameter is ignored for countries other than GB and NL.&lt;br&gt;
+legacy_mode: If set to 1 for Switzerland, the calculator does not use the external Java program provided by Swiss Interbank Clearing. This parameter has no effect for countries other than Switzerland. For Switzerland, the Java program validates account numbers, but is slower and requires all characters to be entered correctly (such as dots, hyphens etc.). The legacy mode is faster, but does not validate account numbers, and is less likely to produce correct results.&lt;br&gt;&lt;br&gt;
+Output fields are:&lt;br&gt;
+result: 'passed' or 'failed' - for a valid or invalid account number/bank code/country combination&lt;br&gt;
+return_code: a condensed representation of the results of various checks. Not all checks have necessarily been done (see the other fields to find out). The condensed representation is a number which is 0 if all supported checks were done and passed. Otherwise, it is the sum of one or more of the following numbers: 1=automatically appended a subaccount number; 2=account number does not contain a checksum; 4=did not check the checksum; 8=did not check the bank code; 32=warning: a subaccount number might need to be appended, but you need to check if this is really the case; 128=checksum error in account number; 256=bank code not found in directory; 512=wrong length for account number; 1024=wrong length for bank code; 4096=missing input data (such as country code); 8192=this country is not (yet?) supported.&lt;br&gt; This condensed return code can be used for a simple check such as: if the sum is less than 32, the result can be assumed to be correct; if it is in the range from 32 to 127, it might be correct but should be checked; if it is 128 or higher, there seems to be a more serious error. There is one exception to this rule: if it is 65536, this means that the return code is not set at all. This should not happen - please notify us if it does.&lt;br&gt;
+ibanrueck_return_code: another condensed representation of the results. For details, see http://en.iban-bic.com/doc_calculate_iban.html&lt;br&gt;
+iban: the calculated IBAN (if the domestic account number/bank code had the right length; an IBAN may be provided even if the account number validation fails.)&lt;br&gt;
+checks: an array of the checks performed (can contain elements such as 'length', 'bank_code', 'account_number').&lt;br&gt;
+bic_candidates: an array of BICs that are associated with the given national bank code. May be empty or may contain one or more elements. The bic element has the attributes bic, wwwcount, sampleurl, zip code, and city. If a wwwcount greater than zero is given, the BIC was harvested from the Web (and found on as many pages as indicated by wwwcount, for example on the page indicated by sampleurl). If wwwcount is zero, the BIC comes from a national bank or the ECB. If city is given, this also indicates that the BIC comes from a national bank or the ECB. The given city does not necessarily reflect the location of the given branch - it can also be the location of the headquarters.&lt;br&gt;
+country: the ISO country code (first two letters of the IBAN)&lt;br&gt;
+bank_code: the national bank code, if it exists. BIC for NL (where no national bank code exists), BC-Nummer for Switzerland. There are functions provided for obtaining Dutch BICs and Swiss BC numbers.&lt;br&gt;
+alternative_bank_code: very few banks embed a bank code in the IBAN that is different from the bank code communicated to clients. If this might be the case, this field is filled with the alternative possibility. Otherwise, it is empty.&lt;br&gt;
+bank: bank name, if known&lt;br&gt;
+bank_address: some address data, if known&lt;br&gt;
+bank_url: URL of website, if known&lt;br&gt;
+branch: branch name, if known&lt;br&gt;
+branch_code: branch code, if known&lt;br&gt;
+in_scl_directory: if at least one BIC is returned, this field is set to 'yes' or 'no', depending on whether the first returned BIC is listed in the German Bundesbank's SCL directory. If no BIC is returned, this field is left blank.&lt;br&gt;
+sct: if in_scl_directory is set to 'yes', this field is set to 'yes' if a SEPA Credit Transfer is supported for the first returned BIC. If no SCT is supported, the field is set to 'no'. If no BIC is returned, the field is left blank.&lt;br&gt;
+sdd: if in_scl_directory is set to 'yes', this field is set to 'yes' if SEPA Direct Debit is supported for the first returned BIC. If no SDD is supported, the field is set to 'no'. If no BIC is returned, the field is left blank.&lt;br&gt;
+cor1: if in_scl_directory is set to 'yes', this field is set to 'yes' if D-1 Core SEPA Direct Debit  is supported for the first returned BIC. 
+b2b: if in_scl_directory is set to 'yes', this field is set to 'yes' if SEPA Business to Business is supported for the first returned BIC. If no B2B is supported, the field is set to 'no'. If no BIC is returned, the field is left blank.&lt;br&gt;
+scc:  if in_scl_directory is set to 'yes', this field is set to 'yes' if SEPA Cards Clearing is supported for the first returned BIC.
+account_number: the domestic bank account number&lt;br&gt;
+alternative_account_number: sometimes, a subaccount number needs to be appended to a German account number before it is embedded in an IBAN. If this is the case, the extended account number appears in this field.&lt;br&gt;
+account_validation_method: name of the validation algorithm for the domestic account number&lt;br&gt;
+account_validation: for German or Swiss account numbers, an explanation (in German)&lt;br&gt;
+length_check: 'passed', 'failed for bank code', or 'failed for account number' - for the right number of characters for the given country and account number/bank code&lt;br&gt;
+account_check (not provided for every country): 'passed' or 'failed'; for Germany also possible: passed after correction - in that case see alternative_account_number (checksum validation; if the algorithm is unknown, or if there is no checksum, the result is 'passed' or empty).&lt;br&gt;
+bank_code_check (not provided for every country): lookup of national bank code was successful ('passed') or not ('failed'); if an alternative bank code might be necessary for the IBAN, this information is added after the word 'passed' in this field.&lt;br&gt;
+bic_plausibility_check: NL only. Checks how often account numbers of the given bank actually have the given prefix. Since this does not guarantee anything, this check is ignored for the overall pass/fail decision that is reported in the result field. But for some Dutch banks, it can give you an idea of how likely it is that the right BIC was provided.&lt;br&gt;
+data_age (not given for all countries): age of the BIC and other bank-related data (not defined for data harvested from the Web). Format: yyyymmdd.&lt;br&gt;
+IBANformat: a string describing the IBAN format for the given country, for example: 'DEkk BBBB BBBB CCCC CCCC CC'.&lt;br&gt;
+formatcomment: an explanation of the IBANformat string, for example: 'B = sort code (BLZ), C = account No.'&lt;br&gt;
+balance: the number of remaining calculations you can do before having to recharge your account. This does not apply to customers with a subscription which includes an unlimited number of calculations.</documentation>
+    <input message="tns:calculate_ibanRequest"/>
+    <output message="tns:calculate_ibanResponse"/>
+  </operation>
+  <operation name="validate_iban_batch">
+    <documentation>Validates up to 50 IBANs with one function call. The user ID and password you need to pass with the request are the same you use for logging in on the website iban-bic.com. Instead of the password, you may also pass md5('validate_iban_batch'.user.ibans.password), that is, the MD5 hash of the concatenation of the function name, your user name, the IBAN numbers, and your password.&lt;br&gt;
+Parameters are:&lt;br&gt;
+ibans - a semicolon-separated list of the IBANs to validate.&lt;br&gt;
+user - your unique user ID&lt;br&gt;
+password - your password&lt;br&gt;
+Output fields are the same as for the function validate_iban (see there), but in an array with as many entries as the number of accounts provided in the ibans parameter.&lt;br&gt;</documentation>
+    <input message="tns:validate_iban_batchRequest"/>
+    <output message="tns:validate_iban_batchResponse"/>
+  </operation>
+  <operation name="calculate_iban_batch">
+    <documentation>Calculates up to 50 IBANs with one function call. The user ID and password you need to pass with the request are the same you use for logging in on the website iban-bic.com. Instead of the password, you may also pass md5('calculate_iban_batch'.user.accounts.password), that is, the MD5 hash of the concatenation of the function name, your user name, the account numbers, and your password.&lt;br&gt;
+Parameters are:&lt;br&gt;
+countries - a semicolon-separated list of the 2-letter ISO country codes.&lt;br&gt;
+bankcodes -  a semicolon-separated list of the domestic bank codes (BC number for Switzerland). For the following countries, the whole domestic account number, including any bank codes and branch codes, should be passed with the account parameter, and the bankcode parameter should stay empty: IT, BE, ES, EE, SK, CZ, HU, LU, PL, FR, GR&lt;br&gt;
+accounts - a semicolon-separated list of the domestic account numbers&lt;br&gt;
+user - your unique user ID&lt;br&gt;
+password - your password&lt;br&gt;
+bics - a semicolon-separated list of the BIC codes (or at least a sufficiently long prefix) for GB, NL (GB: web crawl can be used, but does not provide all BICs. If the bics parameter is omitted, and the BIC is not found in the Web crawl, this will be shown with an error message in the output field result). This parameter is ignored for countries other than GB and NL.&lt;br&gt;
+legacy_mode: If set to 1 for Switzerland, the calculator does not use the external Java program provided by Swiss Interbank Clearing. This parameter has no effect for countries other than Switzerland. For Switzerland, the Java program validates account numbers, but is slower and requires all characters to be entered correctly (such as dots, hyphens etc.). The legacy mode is faster, but does not validate account numbers, and is less likely to produce correct results.&lt;br&gt;&lt;br&gt;
+Output fields are the same as for the function calculate_iban (see there), but in an array with as many entries as the number of accounts provided in the accounts parameter.&lt;br&gt;</documentation>
+    <input message="tns:calculate_iban_batchRequest"/>
+    <output message="tns:calculate_iban_batchResponse"/>
+  </operation>
+  <operation name="validate_ABA">
+    <documentation>Validates the given (United States) ABA routing number. The user ID and password you need to pass with the request are the same you use for logging in on the website iban-bic.com.
+        Instead of the password, you may also pass md5('validate_ABA'.user.routing_number.password), that is, the MD5 hash of the concatenation of the function name, your user name, the routing number, and your password.&lt;br&gt;
+Output fields are:&lt;br&gt;
+routing_number: the routing number which was validated.&lt;br&gt;
+result: 'passed' or 'failed' - for a formally valid or invalid routing number. Checks include length, numerical characters, known number ranges, and the embedded checksum.&lt;br&gt;
+return_code: a condensed representation of the checks. This field contains the sum of the following numbers:&lt;br&gt;
+512 if the format is wrong (not all characters numeric, wrong length, invalid first two digits),&lt;br&gt;
+256 if the checksum is wrong.&lt;br&gt;
+OKchecksum: yes or no, depending on whether the checksum is correct.&lt;br&gt;
+OKformat: yes or no, depending on whether the length is correct, there are no characters other than numbers, and the first two digits correspond to number ranges which are actually in use.&lt;br&gt;
+name: bank name, if known.&lt;br&gt;
+state: state or territory of the bank, if known.&lt;br&gt;
+city: city of the bank, if known&lt;br&gt;
+funds_transfer: yes or no, depending on whether the routing number is eligible, or empty if unknown.&lt;br&gt;
+book_entry_securities_transfer: yes or no, depending on whether the routing number is eligible for Book-Entry Securities transfer, or empty if unknown.&lt;br&gt;
+settlement_only: yes or no, depending on whether the status of the routing number is Settlement-Only, or empty if unknown.&lt;br&gt;
+range: a description of the number range (first two digits) in natural language.&lt;br&gt;
+balance: the number of remaining calculations you can do before having to recharge your account. This does not apply to customers with a subscription which includes an unlimited number of calculations.</documentation>
+    <input message="tns:validate_ABARequest"/>
+    <output message="tns:validate_ABAResponse"/>
+  </operation>
+  <operation name="get_dutch_banks">
+    <documentation>Returns a list of Dutch banks and their BICs. Instead of the password, you may also pass md5('get_dutch_banks'.user.password), that is, the MD5 hash of the concatenation of the function name, your user name, and your password.&lt;br&gt;
+Dutch domestic account numbers do not contain reliable information about the bank. There is a bank code (of variable length) embedded in Dutch account numbers, but it is possible for bank clients to keep an account number when switching banks, and therefore there exist accounts where the bank code does not match the bank. When calculating a Dutch IBAN, you need to pass an account number and a BIC to the function calculate_iban; the BIC can be picked from the list which is returned by the function get_dutch_banks.&lt;br&gt;
+Output fields:&lt;br&gt;
+result: empty if everything is okay, otherwise an error message.&lt;br&gt;
+banks: an array of bank structs with the fields:&lt;br&gt;
+* name: the name of the bank.&lt;br&gt;
+* bic: the BIC.&lt;br&gt;
+* bankcode: this field is left empty for Dutch banks.&lt;br&gt;
+* address: this field is left empty.&lt;br&gt;
+balance: the number of remaining calculations you can do before having to recharge your account. This does not apply to customers with a subscription which includes an unlimited number of calculations.</documentation>
+    <input message="tns:get_dutch_banksRequest"/>
+    <output message="tns:get_dutch_banksResponse"/>
+  </operation>
+  <operation name="get_swiss_banks">
+    <documentation>Returns a list of Swiss banks and their BC numbers. Instead of the password, you may also pass md5('get_swiss_banks'.user.password), that is, the MD5 hash of the concatenation of the function name, your user name, and your password.&lt;br&gt;
+Due to the large number of BC numbers, this function needs to be used in two steps:&lt;br&gt;
+1. If called with an empty bank name, get_swiss_banks returns a list of all names of Swiss banks, but still without BC numbers.&lt;br&gt;
+2. If called with one of the bank names that were obtained in step 1, the function returns all BC numbers for the given bank.&lt;br&gt;
+Output fields:&lt;br&gt;
+result: empty if everything is okay, otherwise an error message.&lt;br&gt;
+banks: an array of bank structs with the fields:&lt;br&gt;
+* name: the name of the bank.&lt;br&gt;
+* bic: if the function was called with a non-empty bank name, the BIC. Otherwise, this field is left empty.&lt;br&gt;
+* bankcode: if the function was called with a non-empty bank name as first parameter, the bankcode field contains a BC number. Otherwise, it is empty.&lt;br&gt;
+* address: empty.&lt;br&gt;
+balance: the number of remaining calculations you can do before having to recharge your account. This does not apply to customers with a subscription which includes an unlimited number of calculations.</documentation>
+    <input message="tns:get_swiss_banksRequest"/>
+    <output message="tns:get_swiss_banksResponse"/>
+  </operation>
+  <operation name="find_bank">
+    <documentation>Given some search terms (one or more words separated by space characters), optionally the country code (can be empty if all countries should be searched), optionally the bankcode (can be emtpy if the bank code is part of what the user is looking for), the maximum number of items to return, and user ID/password, returns a list of matching banks with additional information (varying by country, this information can include: national bank code, bank name, bank address, and BIC). 
+	  Instead of the password, you may also pass md5('find_bank'.user.searchterms.password), that is, the MD5 hash of the concatenation of the function name, your user name, the search terms, and your password.&lt;br&gt;
+Output fields:&lt;br&gt;
+result: empty if everything is okay, otherwise an error message.&lt;br&gt;
+banks: an array of bank structs with the fields:&lt;br&gt;
+* name: the name of the bank.&lt;br&gt;
+* bic: the BIC.&lt;br&gt;
+* bankcode: the national bank code.&lt;br&gt;
+* address: any address data we have about the bank.&lt;br&gt;
+balance: the number of remaining calculations you can do before having to recharge your account. This does not apply to customers with a subscription which includes an unlimited number of calculations.</documentation>
+    <input message="tns:find_bankRequest"/>
+    <output message="tns:find_bankResponse"/>
+  </operation>
+  <operation name="get_salts">
+    <documentation>Input:&lt;br/&gt;
+- account_holder: the name of the holder of an account whose IBAN you intend to submit with a later call to the function submit_hashes.&lt;br/&gt; Returns &quot;OK&quot; in the &quot;result&quot; field if there was no error (or an error message otherwise), and a list one or more values to be used as salt.&lt;br&gt;</documentation>
+    <input message="tns:get_saltsRequest"/>
+    <output message="tns:get_saltsResponse"/>
+  </operation>
+  <operation name="submit_iban">
+    <documentation>Input:&lt;br/&gt;
+- IBAN: an IBAN you know exists.&lt;br/&gt;
+- account_holder: the name of the holder of the account whose IBAN is given as the first parameter.&lt;br/&gt; Returns &quot;OK&quot; in the &quot;result&quot; field if there was no error (or an error message otherwise), and your new account balance, which will be increased if you submit an IBAN/account holder combination that is new to us.&lt;br&gt;</documentation>
+    <input message="tns:submit_ibanRequest"/>
+    <output message="tns:submit_ibanResponse"/>
+  </operation>
+  <operation name="submit_hashes">
+    <documentation>Input:&lt;br/&gt;
+- hashes: A semicolon-separated list of SHA256 hashes of the one IBAN you submit with this function call, salted in turn with each of the salt values you have generated from the account holder name by using the function get_salts in an earlier step. Append the salt value to the IBAN before applying the SHA256 function (only one salt value for each hash). Example: if the IBAN is AT131490022010010999, and one of the salt values you got is 61477b49a08f3320dec8390c62fae46337fb52937153a2cd5ee1f326f523ba8c, one of your hashes you submit must be sha256('AT13149002201001099961477b49a08f3320dec8390c62fae46337fb52937153a2cd5ee1f326f523ba8c') = 91b75dbb252fe1b78373b86bb8ed7eed586d349a242aa7835bf0da23289eadee.&lt;br/&gt;
+- salts: A semicolon-separated list of the salts you have received from get_salts and used for generating the hashes submitted with this function call. May be left empty if we have configured your account as especially trustworthy.&lt;br/&gt;
+- IBANprefix: the first 10 characters of the IBAN. May be left empty if we have configured your account as especially trustworthy.&lt;br/&gt;
+ Returns &quot;OK&quot; in the &quot;result&quot; field if there was no error (or an error message otherwise), and your new account balance, which will be increased if you submit an IBAN/account holder combination that is new to us.&lt;br&gt;</documentation>
+    <input message="tns:submit_hashesRequest"/>
+    <output message="tns:submit_hashesResponse"/>
+  </operation>
+  <operation name="supported_countries">
+    <documentation>Input:&lt;br/&gt;
+- a condition for what you consider 'supported'. You may build an overall condition by combining various conditions with AND, OR, and parentheses. The following conditions are available:&lt;br/&gt;* IBAN: an IBAN is calculated and returned.&lt;br/&gt;* unique_BIC: if a BIC code exists, it is returned. Only one BIC code is returned in this case.&lt;br/&gt;* some_BICs: zero, one, or more BIC candidates may be returned. Countries which fulfil the condition 'unique_BIC' are considered to also fulfil 'some_BICs'.&lt;br/&gt;* name_based_BICs: zero, one, or more BIC candidates may be returned. Unlike 'some_BICs', these may have been picked based not on one BIC/bank code directory, but by combining two directories based on the bank names, which is slightly more error-prone. Countries which fulfil the condition 'some_BICs' are considered to also fulfil 'name_based_BICs'.&lt;br/&gt;* account_validated: if a checksum exists in an account number, it will be checked.&lt;br/&gt;* bankcode_validated: the bank code is validated by looking it up in a table of bank codes.&lt;br/&gt;If left blank, the default condition is 'IBAN AND some_BICs AND (account_validated OR bankcode_validated)'.&lt;br/&gt;- language: the desired language for the human-readable list of countries which will be returned.&lt;br/&gt; Returns &quot;OK&quot; in the &quot;result&quot; field if there was no error (or an error message otherwise), and a list of all supported countries both as a list of 2-digit country codes and as a list of human-readable country names.&lt;br&gt;</documentation>
+    <input message="tns:supported_countriesRequest"/>
+    <output message="tns:supported_countriesResponse"/>
+  </operation>
+  <operation name="country_supported">
+    <documentation>THIS IS A LEGACY FUNCTION. PLEASE DO NOT USE IT ANYMORE. USE supported_countries INSTEAD.&lt;br/&gt;Input: a 2-digit country code (as it is used in IBANs). Returns &quot;yes&quot; or &quot;no&quot; as information about the specified country, and also a list of all supported countries as 2-digit country codes. Because you get the full list, you do not have to specify any country in the request. If you do not specify a country, this function still returns the list of all supported countries. &lt;br&gt;</documentation>
+    <input message="tns:country_supportedRequest"/>
+    <output message="tns:country_supportedResponse"/>
+  </operation>
+  <operation name="get_form">
+    <documentation>Input: params is an array of key-value-pairs. For the first call, it should contain something like this (in PHP notation): (&quot;country&quot;=&gt;&quot;DE&quot;, &quot;language&quot;=&gt;0). The country should be given using the 2-letter notation which is also used for the IBANs. The desired language of the field labels should be given using the same numbers that you can see on iban-rechner.de when hovering over the language links on the top right (thus e. g. 0 for German).&lt;br&gt;
+This function returns an array of fields as well as the information whether another iteration is needed. The latter is given in the field &quot;done&quot; as &quot;no&quot; or &quot;yes&quot;. Every field (element of the field array) has the properties:&lt;br&gt;id: an identifier.&lt;br&gt;type: hidden/text/select/submit/static for a hidden field, text edit field, drop-down box, submit button, or static text, respectively.&lt;br&gt;value: a value (possibly empty).&lt;br&gt;label: text which should be shown to the left of the field (or on it, if it happens to be a button).&lt;br&gt;optionids: an array of numerical IDs. This array has the same length as the &quot;options&quot; array (see below). One of these IDs should be returned if the corresponding item from the &quot;options&quot; array was chosen.&lt;br&gt;options: an array of strings containing the possible values for a drop-down box.&lt;br&gt;length: the maximum expected length of the value. A 0 should be interpreted as &quot;not applicable&quot; or &quot;not specified&quot;.&lt;br&gt;newline: yes or no; it is suggested to place this field into the same row as the previous one if &quot;newline&quot; is no, and to start a new line otherwise.&lt;br&gt;
+If &quot;done&quot; is &quot;no&quot;, this function should be called again. All fields which were returned in the previous call of get_form should be passed back to it as part of the array of key-value-pairs. For each such pair, the key should equal the &quot;id&quot; property of the field, and the value should equal either a user-supplied value (for editable fields) or the value which has been returned by get_form (for hidden or static fields).&lt;br&gt;
+If &quot;done&quot; is &quot;yes&quot;, this means that now you can call the function calculate_iban; the list of returned fields now corresponds with the parameters of calculate_iban.
+&lt;br&gt;</documentation>
+    <input message="tns:get_formRequest"/>
+    <output message="tns:get_formResponse"/>
+  </operation>
+</portType>
+<binding name="IBAN_CalculatorBinding" type="tns:IBAN_CalculatorPortType">
+  <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <operation name="get_balance">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#get_balance" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="validate_iban">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#validate_iban" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="restore_iban">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#restore_iban" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="validate_iban_bic">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#validate_iban" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="transfer_form">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#transfer_form" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="validate_creditor_identifier">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#validate_creditor_identifier" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="calculate_iban">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#calculate_iban" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="validate_iban_batch">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#validate_iban_batch" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="calculate_iban_batch">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#calculate_iban_batch" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="validate_ABA">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#validate_ABA" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="get_dutch_banks">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#get_dutch_banks" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="get_swiss_banks">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#get_swiss_banks" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="find_bank">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#find_bank" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="get_salts">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#get_salts" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="submit_iban">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#get_salts" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="submit_hashes">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#get_salts" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="supported_countries">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#supported_countries" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="country_supported">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#country_supported" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="get_form">
+    <soap:operation soapAction="https://ssl.ibanrechner.de/#country_supported" style="rpc"/>
+    <input><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="https://ssl.ibanrechner.de/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+</binding>
+<service name="IBAN_Calculator">
+  <port name="IBAN_CalculatorPort" binding="tns:IBAN_CalculatorBinding">
+    <soap:address location="https://ssl.ibanrechner.de:443/soap/index.php"/>
+  </port>
+</service>
+</definitions>

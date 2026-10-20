@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Coercive\Shop\Iban\Struct;
 
 /**
@@ -14,9 +16,10 @@ namespace Coercive\Shop\Iban\Struct;
  * @link https://github.com/Coercive/Iban
  *
  * @author  	Anthony Moral <contact@coercive.fr>
- * @copyright   (c) 2018 Anthony Moral
+ * @copyright   2018 - 2026 Anthony Moral
  * @license 	MIT
  */
+#[\AllowDynamicProperties]
 class IBANValResStruct
 {
 	/** @var string the IBAN that was validated */
@@ -26,7 +29,7 @@ class IBANValResStruct
 	public $result = '';
 
 	/**
-	 * @var int a condensed representation of the results of various checks.
+	 * @var string a condensed representation (numeric string, empty when no check was done) of the results of various checks.
 	 * Not all checks have necessarily been done (see the other fields to find out).
 	 * The condensed representation is a number which is 0 if all supported checks were done and passed.
 	 * Otherwise, it is the sum of one or more of the following numbers: 1=automatically appended a subaccount number;
@@ -43,7 +46,7 @@ class IBANValResStruct
 	 * There is one exception to this rule: if it is 65536, this means that the return code is not set at all.
 	 * This should not happen - please notify us if it does.
 	 */
-	public $return_code = 0;
+	public $return_code = '';
 
 	/**
 	 * @var string[] an array of the checks performed (can contain elements such as 'length', 'bank_code',

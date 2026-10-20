@@ -1,0 +1,39 @@
+<?php
+declare(strict_types=1);
+
+namespace Coercive\Shop\Iban\Struct;
+
+/**
+ * Class TransferResStruct
+ *
+ * @API IBAN_Calculator
+ * @link Website https://ssl.ibanrechner.de/?L=0
+ * @link Webservice https://ssl.ibanrechner.de/soap0.html?L=0
+ * @link Documentation https://ssl.ibanrechner.de/soap/#
+ * @link WSDL https://ssl.ibanrechner.de/soap/?wsdl
+ *
+ * @package Coercive\Shop\Iban
+ * @link https://github.com/Coercive/Iban
+ *
+ * @author  	Anthony Moral <contact@coercive.fr>
+ * @copyright   2018 - 2026 Anthony Moral
+ * @license 	MIT
+ */
+#[\AllowDynamicProperties]
+class TransferResStruct
+{
+	/** @var string URL of the generated transfer form */
+	public $url = '';
+
+	/** @var string */
+	public $result = '';
+
+	/** @var IBANValResStruct|null validation of the beneficiary account */
+	public $validation_to = null;
+
+	/** @var IBANValResStruct|null validation of the payer account */
+	public $validation_from = null;
+
+	/** @var int */
+	public $balance = 0;
+}

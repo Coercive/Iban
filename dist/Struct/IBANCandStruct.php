@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Coercive\Shop\Iban\Struct;
 
 /**
@@ -14,9 +16,10 @@ namespace Coercive\Shop\Iban\Struct;
  * @link https://github.com/Coercive/Iban
  *
  * @author  	Anthony Moral <contact@coercive.fr>
- * @copyright   (c) 2018 Anthony Moral
+ * @copyright   2018 - 2026 Anthony Moral
  * @license 	MIT
  */
+#[\AllowDynamicProperties]
 class IBANCandStruct
 {
 	/**
@@ -38,5 +41,5 @@ class IBANCandStruct
 	 * @var int the number of remaining calculations you can do before having to recharge your account.
 	 * This does not apply to customers with a subscription which includes an unlimited number of calculations.
 	 */
-	public $balance = '';
+	public $balance = 0;
 }
